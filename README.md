@@ -1,5 +1,6 @@
 ## Purpose
-This is project for creating resume.
+
+This is Reactjs project for creating resume.
 I include the functionality like Authorisation with otp , mobile-responsiveness and Preview section where you see your resume
 
 ## Note
@@ -10,13 +11,9 @@ I used dependencies like:
 3. @react-pdf/renderer
 4. zustand
 5. lucide-react
+6. express
 
 and for login logout I hashed password using bcryptjs and used jwt tokens
 
-# Pictures
-## Before login
-![Home page](image.png)
-## After login
-when you visit  built resume
-![alt text](image-3.png)
+
 
