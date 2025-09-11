@@ -15,5 +15,7 @@ I used dependencies like:
 
 and for login logout I hashed password using bcryptjs and used jwt tokens
 
+## currently calculate score is not working because i not build yet
+
 
 
