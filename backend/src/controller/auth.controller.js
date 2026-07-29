@@ -32,13 +32,13 @@ const registeruser = async (req, res) => {
     });
     console.log(newuser);
     const token = generateToken(newuser._id, res);
-    res.cookie(
-      "jwt",token,{
-        httpOnly:true,
-        samesite:"strict",
-        maxAge: 3*24*60*60*1000
-      }
-    )
+    
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    maxAge: 3 * 24 * 60 * 60 * 1000,
+});
    
     const transporter = nodemailer.createTransport({
         service: "gmail",
