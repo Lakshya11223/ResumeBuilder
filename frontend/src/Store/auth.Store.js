@@ -1,6 +1,9 @@
 import { create } from "zustand";
 import { toast } from "react-hot-toast";
-import { persist } from "zustand/middleware";  
+import { persist } from "zustand/middleware"; 
+
+
+const API = import.meta.env.VITE_API_URL;
 
 export const useAuthStore = create(
   (set, get) => ({
@@ -25,7 +28,7 @@ export const useAuthStore = create(
   check: async () => {
     set({ authUser: false, isloading: true });
     try {
-      const res = await fetch("http://localhost:4000/api/v1/users/check", {
+      const res = await fetch(`${API}/api/v1/users/check`, {
         credentials: "include",
         method: "GET",
       });
@@ -46,7 +49,7 @@ export const useAuthStore = create(
 verify:async (data)=>{
     set({isloading:true})
     try {
-    const res = await fetch("http://localhost:4000/api/v1/users/verify", {
+    const res = await fetch(`${API}/api/v1/users/verify`, {
     credentials: "include",
     method: "POST",
     body:JSON.stringify(data),
@@ -64,7 +67,7 @@ verify:async (data)=>{
     } catch (error) {
       toast.error("Server Error"); 
       set({ isloading: false, authUser: false });
-      console.log("Error in check auth:", err);
+      console.log("Error in check auth:", error);
     }
   },
 
@@ -72,7 +75,7 @@ verify:async (data)=>{
   register: async (data) => {
     set({ isloading: true });
     try {
-      const res = await fetch("http://localhost:4000/api/v1/users/Signup", {
+      const res = await fetch(`${API}/api/v1/users/Signup`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(data),
@@ -99,7 +102,7 @@ verify:async (data)=>{
   login: async (data) => {
     set({ isloading: true });
     try {
-      const res = await fetch("http://localhost:4000/api/v1/users/login", {
+      const res = await fetch(`${API}/api/v1/users/login`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify(data),
@@ -126,7 +129,7 @@ verify:async (data)=>{
  logout: async () => {
   set({ isloading: true });
   try {
-    const res = await fetch("http://localhost:4000/api/v1/users/logout", {                                                                                                                          
+    const res = await fetch(`${API}/api/v1/users/logout`, {                                                                                                                          
       credentials: "include",
       method: "POST",
     });

@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { toast, ToastBar } from "react-hot-toast";
 
+const API = import.meta.env.VITE_API_URL;
+
 export const useResumeStore = create((set, get) => ({
   title: "",
   info:"",
@@ -20,7 +22,7 @@ create: async (title, data) => {
       console.log(' Sending to backend - Title:', title);
       console.log(' Sending to backend - Resume Data:', data);
 
-    const res = await fetch("http://localhost:4000/api/v1/resumes/create", {
+    const res = await fetch(`${API}/api/v1/resumes/create`, {
       credentials: "include",
       method: "POST",
       body: JSON.stringify({ title, ...data }),
@@ -48,7 +50,7 @@ getall: async () => {
   set({loading:true})
   console.log("get all is called from frontend")
   try{
-    const res=await fetch('http://localhost:4000/api/v1/resumes/all',{
+    const res=await fetch(`${API}/api/v1/resumes/all`,{
       method:"GET",
       headers:{
         "Content-Type":"application/json",
@@ -74,7 +76,7 @@ getall: async () => {
 
  Delete:async (id)=>{
   try {
-    const res = await fetch(`http://localhost:4000/api/v1/resumes/delete/${id}`,{
+    const res = await fetch(`${API}/api/v1/resumes/delete/${id}`,{
       method:"POST",
       headers:{
         "Content-Type":"application/json",
@@ -96,7 +98,7 @@ getall: async () => {
  },
  getresume:async (id)=>{
   try{
-      const res =await fetch(`http://localhost:4000/api/v1/resumes/get/${id}`,{
+      const res =await fetch(`${API}/api/v1/resumes/get/${id}`,{
         credentials:"include",
         method:"GET",
         headers:{
@@ -120,7 +122,7 @@ getall: async () => {
  },
   update:async (id,resumedata)=>{
   try{
-     const res =await fetch(`http://localhost:4000/api/v1/resumes/update/${id}`,{
+     const res =await fetch(`${API}/api/v1/resumes/update/${id}`,{
         credentials:"include",
         method:"PUT",
         headers:{
