@@ -33,12 +33,6 @@ const registeruser = async (req, res) => {
     console.log(newuser);
     const token = generateToken(newuser._id, res);
 
-  res.cookie("jwt", token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 3 * 24 * 60 * 60 * 1000,
-});
 
 // 
 
@@ -58,16 +52,6 @@ const transporter = nodemailer.createTransport({
 console.log("EMAIL_USER:", process.env.EMAIL_USER);
 console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
 
-try {
-  await transporter.verify();
-  console.log("SMTP Connected Successfully");
-} catch (err) {
-  console.error("SMTP Verify Failed:", err);
-  return res.status(500).json({
-    message: "SMTP connection failed",
-    error: err,
-  });
-}
 
 const mailOptions = {
   from: process.env.EMAIL_USER,
