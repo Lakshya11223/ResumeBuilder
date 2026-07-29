@@ -32,30 +32,63 @@ const registeruser = async (req, res) => {
     });
     console.log(newuser);
     const token = generateToken(newuser._id, res);
-    
+
   res.cookie("jwt", token, {
     httpOnly: true,
     secure: true,
     sameSite: "none",
     maxAge: 3 * 24 * 60 * 60 * 1000,
 });
-   
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-  }
+
+// 
+
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // true only for port 465
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: "Verify Your Email",
-      html: `<p>Your OTP for email verification is: <strong>${otp}</strong></p>`,
-    };
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
 
-    await transporter.sendMail(mailOptions);
+try {
+  await transporter.verify();
+  console.log("SMTP Connected Successfully");
+} catch (err) {
+  console.error("SMTP Verify Failed:", err);
+  return res.status(500).json({
+    message: "SMTP connection failed",
+    error: err,
+  });
+}
+
+const mailOptions = {
+  from: process.env.EMAIL_USER,
+  to: email,
+  subject: "Verify Your Email",
+  html: `
+    <h2>Email Verification</h2>
+    <p>Your OTP is:</p>
+    <h1>${otp}</h1>
+    <p>This OTP is valid for 10 minutes.</p>
+  `,
+};
+
+try {
+  const info = await transporter.sendMail(mailOptions);
+  console.log(" Email sent:", info.response);
+} catch (err) {
+  console.error("Email Send Failed:", err);
+  return res.status(500).json({
+    message: "Failed to send OTP email",
+    error: err,
+  });
+}
+
     res.status(201).json({
       message: "User created successfully. OTP sent to email.",
       User: {
