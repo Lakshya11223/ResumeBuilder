@@ -17,8 +17,10 @@ app.use(express.urlencoded({extended:true,limit:'1mb'}))
 //    methods: ["GET", "POST", "PUT", "DELETE"],
 //    credentials: true
 // }));
-app.use(cors());
-
+app.use(cors({
+  origin: "https://resumebuilder-1-h8ai.onrender.com",
+  credentials: true,
+}));
 const port = process.env.PORT || 4000;
 db();
 app.use("/api/v1/users",authroutes);
