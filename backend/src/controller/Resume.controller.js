@@ -51,17 +51,18 @@ const createResume = async (req, res) => {
             const userid = req.user?._id;
             
             if(!userid){
-                res.status(400).json({message:"Unauthorised user, Please log in"});
+                return res.status(400).json({message:"Unauthorised user, Please log in"});
             }
             try {
             const resumes =await Resume.find({userId : userid}).sort({updatedAt:-1});
             if(!resumes ||  resumes.length === 0){
-                res.status(400).json({message:"No resume found"});
+                return res.status(400).json({message:"No resume found"});
             }
-            res.status(200).json({message:"Succesfuuly get resumes",data:resumes});
+            return res.status(200).json({message:"Succesfuuly get resumes",data:resumes});
                 
             } catch (error) {
                 console.log("Error in getting all the resumes",error)
+                return res.status(500).json({message:"Server error while getting resumes"});
             }
             
         };
@@ -72,23 +73,23 @@ const createResume = async (req, res) => {
 
             try{
             if(!userid){
-            res.status("Unauthorised user, Please log in");
+            return res.status(401).json({message:"Unauthorised user, Please log in"});
             }
             if(!resumeid){
-                res.status("Failed to fetch, the resume");
+                return res.status(400).json({message:"Failed to fetch, the resume"});
             }
             const oneresume =await Resume.find({_id : resumeid,userId:userid});
 
-            if(!oneresume){
-                res.status(400).json({message:"No resume found"});
+            if(!oneresume || oneresume.length === 0){
+                return res.status(400).json({message:"No resume found"});
             }
 
-            res.status(200).json({message:"Resume fetched successfully",data:oneresume});
+            return res.status(200).json({message:"Resume fetched successfully",data:oneresume});
 
             }
             catch(error){
-                console.log("Error in fetching one resume");
-                res.status(401).json({
+                console.log("Error in fetching one resume", error);
+                return res.status(401).json({
                     message:"No resume found"
                 });
             }
@@ -133,7 +134,7 @@ const deleteResume = async (req,res)=>{
 const {id:resumeid} = req.params;
     try {
         if(!resumeid){
-        res.status(401).json({message:"No resume selectes yet for updation"});
+        return res.status(401).json({message:"No resume selectes yet for updation"});
         }
         console.log("Reached delete");
         const resumefordelete =await Resume.findByIdAndDelete(
@@ -142,13 +143,13 @@ const {id:resumeid} = req.params;
         console.log("deleted")
 
         if(!resumefordelete){
-            res.status(401).json({message:"Not deleted"});
+            return res.status(401).json({message:"Not deleted"});
         }
-        res.status(200).json({message:"your resume has been deleted"});
+        return res.status(200).json({message:"your resume has been deleted"});
 
     } catch (error) {
             console.log("Error in the deletion");
-            res.status(401).json({
+            return res.status(401).json({
             message:"No deletion happened",
             error:error,
         });

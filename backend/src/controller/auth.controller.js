@@ -36,34 +36,77 @@ const registeruser = async (req, res) => {
 
 // 
 
+// const transporter = nodemailer.createTransport({
+//   host: "smtp-relay.brevo.com",
+//   port: 2525,
+//   secure: false,
+//   connectionTimeout: 30000,
+//   greetingTimeout: 30000,
+//   socketTimeout: 30000,
+//   auth: {
+//     user: process.env.BREVO_LOGIN,
+//     pass: process.env.BREVO_PASSWORD,
+//   },
+// });
+
+
+// console.log("BREVO_LOGIN:", process.env.BREVO_LOGIN);
+// console.log("BREVO_PASSWORD exists:", !!process.env.BREVO_PASSWORD);
+// console.log("SENDER_EMAIL:", process.env.SENDER_EMAIL);
+
+
+// try {
+//   await transporter.verify();
+//   console.log(" SMTP server is ready");
+// } catch (err) {
+//   console.error(" SMTP verification failed:", err);
+// }
+
+// const mailOptions = {
+//   from: `"ResumeAnalyser" <${process.env.SENDER_EMAIL}>`,
+//   to: email,
+//   subject: "Verify Your Email",
+//   html: `
+//     <h2>Email Verification</h2>
+//     <p>Your OTP is:</p>
+//     <h1>${otp}</h1>
+//     <p>This OTP is valid for 10 minutes.</p>
+//   `,
+// };
+
+// try {
+//   const info = await transporter.sendMail(mailOptions);
+//   console.log(" Email sent:", info.response);
+// } catch (err) {
+//   console.error(" Email Send Failed:", err);
+//   return res.status(500).json({
+//     message: "Failed to send OTP email",
+//     error: err,
+//   });
+// }
+
+
+
+
 const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 2525,
-  secure: false,
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   connectionTimeout: 30000,
   greetingTimeout: 30000,
   socketTimeout: 30000,
   auth: {
-    user: process.env.BREVO_LOGIN,
-    pass: process.env.BREVO_PASSWORD,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
+console.log("EMAIL_USER:", process.env.EMAIL_USER);
+console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
 
-console.log("BREVO_LOGIN:", process.env.BREVO_LOGIN);
-console.log("BREVO_PASSWORD exists:", !!process.env.BREVO_PASSWORD);
-console.log("SENDER_EMAIL:", process.env.SENDER_EMAIL);
-
-
-try {
-  await transporter.verify();
-  console.log(" SMTP server is ready");
-} catch (err) {
-  console.error(" SMTP verification failed:", err);
-}
 
 const mailOptions = {
-  from: `"ResumeAnalyser" <${process.env.SENDER_EMAIL}>`,
+  from: process.env.EMAIL_USER,
   to: email,
   subject: "Verify Your Email",
   html: `
@@ -78,7 +121,7 @@ try {
   const info = await transporter.sendMail(mailOptions);
   console.log(" Email sent:", info.response);
 } catch (err) {
-  console.error(" Email Send Failed:", err);
+  console.error("Email Send Failed:", err);
   return res.status(500).json({
     message: "Failed to send OTP email",
     error: err,
@@ -205,45 +248,3 @@ export { registeruser, login, verifyOtp, logout,check_auth };
 
 
 
-
-
-
-// const transporter = nodemailer.createTransport({
-//   host: "smtp.gmail.com",
-//   port: 465,
-//   secure: true,
-//   connectionTimeout: 30000,
-//   greetingTimeout: 30000,
-//   socketTimeout: 30000,
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS,
-//   },
-// });
-
-// console.log("EMAIL_USER:", process.env.EMAIL_USER);
-// console.log("EMAIL_PASS exists:", !!process.env.EMAIL_PASS);
-
-
-// const mailOptions = {
-//   from: process.env.EMAIL_USER,
-//   to: email,
-//   subject: "Verify Your Email",
-//   html: `
-//     <h2>Email Verification</h2>
-//     <p>Your OTP is:</p>
-//     <h1>${otp}</h1>
-//     <p>This OTP is valid for 10 minutes.</p>
-//   `,
-// };
-
-// try {
-//   const info = await transporter.sendMail(mailOptions);
-//   console.log(" Email sent:", info.response);
-// } catch (err) {
-//   console.error("Email Send Failed:", err);
-//   return res.status(500).json({
-//     message: "Failed to send OTP email",
-//     error: err,
-//   });
-// }
