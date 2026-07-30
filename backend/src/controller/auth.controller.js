@@ -76,9 +76,9 @@ const mailOptions = {
 
 try {
   const info = await transporter.sendMail(mailOptions);
-  console.log("✅ Email sent:", info.response);
+  console.log(" Email sent:", info.response);
 } catch (err) {
-  console.error("❌ Email Send Failed:", err);
+  console.error(" Email Send Failed:", err);
   return res.status(500).json({
     message: "Failed to send OTP email",
     error: err,
