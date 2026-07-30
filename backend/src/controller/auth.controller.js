@@ -38,7 +38,7 @@ const registeruser = async (req, res) => {
 
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
-  port: 587,
+  port: 2525,
   secure: false,
   connectionTimeout: 30000,
   greetingTimeout: 30000,
@@ -57,9 +57,9 @@ console.log("SENDER_EMAIL:", process.env.SENDER_EMAIL);
 
 try {
   await transporter.verify();
-  console.log("✅ SMTP server is ready");
+  console.log(" SMTP server is ready");
 } catch (err) {
-  console.error("❌ SMTP verification failed:", err);
+  console.error(" SMTP verification failed:", err);
 }
 
 const mailOptions = {
