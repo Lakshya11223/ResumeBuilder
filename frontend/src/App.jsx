@@ -2,17 +2,16 @@ import { Toaster, toast } from 'react-hot-toast'
 import Navbar from "./Components/Navbar.jsx"
 import Home from "./Components/Home.jsx"
 import { useAuthStore } from "./Store/auth.Store.js"
-import Notsomething from "./Components/Notsomething.jsx"
 import Something from "./Components/Something.jsx"
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Loader } from 'lucide-react'
 import ResumeSection from './Components/ResumeSection.jsx'
-import { useResumeStore } from './Store/resume.Store.js'
-import Signuppage from './Components/Signuppage.jsx'
+import ScorePage from './Components/ScorePage.jsx' 
+ import CalculateScorePage from './Components/CalculateScorePage.jsx'
 import { useEffect } from "react"
 
 function App() {
-  const { isloading, authUser, registerdisp, check, logout } = useAuthStore();
+  const { isloading, authUser, check } = useAuthStore();
   
   useEffect(() => {
     check();
@@ -38,7 +37,17 @@ function App() {
           element={authUser ? <Something/> : <Navigate to="/home" replace />} 
         />
         <Route path="/resume" element={authUser ? <ResumeSection/> : <Navigate to="/home" replace />} />
+        {/* [ADD THIS ROUTE] */}
+        <Route 
+          path="/score/:id" 
+          element={authUser ? <ScorePage/> : <Navigate to="/home" replace />} 
+        />
         <Route path="/" element={<Home/>} />
+
+        <Route
+          path="/calculate-score"
+          element={<CalculateScorePage />}
+        />
       </Routes>
     </div>
   )

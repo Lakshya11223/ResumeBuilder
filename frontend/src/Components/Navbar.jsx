@@ -40,9 +40,15 @@ function Navbar() {
           </div>
 
           <div className='hidden md:flex gap-1 lg:gap-6 items-center'>
-            <button className='px-4 lg:px-6 py-2.5 text-slate-700 font-medium hover:text-blue-600 hover:bg-white hover:shadow-md rounded-xl transition-all duration-300 ease-in-out'>
-              Calculate Score
-            </button>
+        
+        <Link
+          to="/calculate-score"
+          className='px-4 lg:px-6 py-2.5 text-slate-700 font-medium hover:text-blue-600 hover:bg-white hover:shadow-md rounded-xl transition-all duration-300 ease-in-out'
+        >
+          Calculate Score
+        </Link>
+
+        
             
             <Link
               to="/build"
