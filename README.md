@@ -1,4 +1,4 @@
-# 📄 ResumeAnalyst
+#  ResumeAnalyst
 
 ResumeAnalyst is a full-stack, automated resume builder and **ATS (Applicant Tracking System) optimization tool**. It lets users build resumes in a clean, live-preview editor and download them as high-quality PDFs — no design skills required.
 
@@ -6,7 +6,7 @@ Beyond building, its core value is the **ATS Scorer & AI Review Engine**, which 
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Live Resume Builder** — form-driven editor with real-time preview, powered by `@react-pdf/renderer` so what you see is exactly what gets exported.
 - **PDF Upload & Parsing** — upload an existing resume PDF; `pdfjs-dist` extracts raw text client-side for analysis without needing a file upload to the server.
@@ -18,7 +18,7 @@ Beyond building, its core value is the **ATS Scorer & AI Review Engine**, which 
 
 ---
 
-## 🧠 How It Works
+##  How It Works
 
 **1. Building a resume**
 The user fills out structured form fields (personal info, experience, education, skills, projects). Zustand stores hold this data centrally, and `@react-pdf/renderer` renders it live into a resume preview pane — the same renderer generates the final downloadable PDF, so there's no mismatch between preview and export.
@@ -57,7 +57,7 @@ Frontend renders score + AI feedback + exportable PDF
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 **Frontend**
 - React 19 + Vite 7
@@ -75,7 +75,7 @@ Frontend renders score + AI feedback + exportable PDF
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 ResumeBuilder/
@@ -99,7 +99,7 @@ ResumeBuilder/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 
